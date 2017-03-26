@@ -1,0 +1,49 @@
+Let us pontificate on the dual nature of "automation" and
+"configuration management", something that is frequently (and to some
+extent painfully so) conflated. I have through many years of poking at
+stuff in production come to appreciate a pattern for automation that
+comprises a "sense", "decide", "actuate" loop (sadly, "SDA" is not a
+sexy acronym). It's basically very loosely mapped onto the OODA loop,
+with some of the 'orient' sliding into "decide" and the rest into
+"sense" (and all of 'observe' being "sense"). That 'act' and "actuate"
+are isomorphic should be self-evident.
+
+So, an automate loop is "check how things are, make a plan for how to
+make them be as they should, execute that plan".
+
+Whereas configuration is "this is a description of how the system
+should be" (ideally, you know, in a description language). And
+"configuration management" would then be 'configuration', plus the
+framework around, you know, managing said configuration. Environment
+definitions belong here. Version control belongs here. And code
+review. Because configuration is "just code in a different language".
+
+And, in a super-ideal world, your automation leverages your
+automation. And by that, I mean that it can not only go "this system
+is not as it should be" and make it so, but go "this system is not as
+it should be, but it is the way it was three check-ins ago, so it is
+still fully managed and I can bring it from there to here safely" or
+"this system is not like any of the checked-in versions, therefore it
+must have been modified by a human, I shall tell a human this and let
+them make a decision".
+
+This would, of course, divorce the actual actuation of "the
+configuration" from "the CM system" (which, you know, still is the
+case for all of the three mentioned above, it's just never really
+discussed that way), but would require that the automation system is
+aware of The Blessed Version Control System which is I gather pretty
+much anathema. But buys you So Much in terms of continuous sensing and
+actuation that it would probably be worth doing.
+
+So, where was I? Ah, yes, with these definitions of "automation
+system" and "configuration management", it's clear that Puppet and
+Chef are both config management and automation tools. It's perhaps
+less clear (at least to me) that Ansible is configuration management
+at all, since it pretty much looks like "all automation" from the
+examples that I have seen.
+
+And while we're discussing code-review, I have a mini-rant for how (at
+least) a GitLab merge shows you not "the head" but "the head as it was
+when the branch was created" (which makes some sense, perhaps), and
+that is the least safe possible way of showing differences when
+merging system configuration changes.
