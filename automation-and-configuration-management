@@ -18,6 +18,12 @@ framework around, you know, managing said configuration. Environment
 definitions belong here. Version control belongs here. And code
 review. Because configuration is "just code in a different language".
 
+A brief aside to discuss things I've seen in "configuration management
+and automation". I've worked a fair bit with Chef and Puppet, and a
+small amount with Ansible. I've also used a slew of "not well known"
+tools internal to one company or another, but I shall try not to
+digress into a discussion about these.
+
 And, in a super-ideal world, your automation leverages your
 automation. And by that, I mean that it can not only go "this system
 is not as it should be" and make it so, but go "this system is not as
@@ -40,7 +46,20 @@ system" and "configuration management", it's clear that Puppet and
 Chef are both config management and automation tools. It's perhaps
 less clear (at least to me) that Ansible is configuration management
 at all, since it pretty much looks like "all automation" from the
-examples that I have seen.
+examples that I have seen. But, then, I've only seen it deployed in
+very much an automation role.
+
+Then there's the thorny question of "how frequently should
+configuration automation be actuated" and the answer is unsurprisingly
+"as frequently as you think is safe". This is a function of a few
+variables, one being "how good are you at getting the configuration
+right before blessing it", one is "how long does it take to roll out a
+configuration to the entire estate" and one (although perhaps hard to
+judge without experimentation) is "how fast can you roll back when you
+cause an outage". If I had to put a number on this, I'd say "somewhere
+between every few hours and a few times per week". This is a large
+span, but since I can only speak generally here, that is what I have
+to say.
 
 And while we're discussing code-review, I have a mini-rant for how (at
 least) a GitLab merge shows you not "the head" but "the head as it was
