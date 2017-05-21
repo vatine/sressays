@@ -1,0 +1,11 @@
+So, you have a monitoring system. And you have a distributed system. Congratulations! Welcome to a world of new fascinating problems!
+
+Where were we? Ah, yes, distributed system. With monitoring. Excellent way of messing things up on the most amusing ways. So, you have approximately N machines doing "the same thing" and you want to monitor them as a collective. Fine, fine. Say we are looking at, say, mean latency (we shouldn't, see "monitoring-basics", but it's easier to explain with means, so let's go with it). Simplicity itself, right? We compute the mean latency for each machine, aggregate that up and...
+
+WAIT, not so fast. If there's any imbalance in the request rate between our machines, we've just ruined our data. Say we have two machines, one is serving 1000 requests, at a mean 45 ms response latency, one is serving 10 requests with a mean 105 ms latency. Takes across all requests, we still have a pretty good latency (45.6 ms, as happens), but if we simply take the mean of means, we get 75 ms, because the request rate is very imbalanced.
+
+So, if you're taking the mean, you need to aggregate "sum of latencies" and "number of requests" from your machines, you can then use that to compute an estate-wide mean.
+
+Sadly, the same thing holds true with percentiles, which is what we should connect. So in a distributed system, having something built in to a binary that gives you "kth %ile for this server" is useful, but not aggregateable. What IS aggregatable is histogram data, as long as you have identical bucketing across the estate you're aggregating over.
+
+And if you have latency histogram data, you can get a really good approximation of percentiles, but it cannot, alas, be exact, since is is fundamentally a bucketing of continuous values.
