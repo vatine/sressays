@@ -20,7 +20,12 @@ probably should, but only because having timelines for these may make
 it easier to quickly troubleshoot once one of the things you actually
 care about go outside the limit where you think it is fine.
 
-Then, once you're monitoring the things you actually care about, you should carefully consider when those values are "OK" and "bad". What's a suitable 99th percentile latency for "serve the home page"? What's an acceptable rate of "5xx status per incoming request" (it's probably higher than 0, and probably vastly lower than 1, maybe 1 in every 1000?). KTune your alerting to this.
+Then, once you're monitoring the things you actually care about, you
+should carefully consider when those values are "OK" and "bad". What's
+a suitable 99th percentile latency for "serve the home page"? What's
+an acceptable rate of "5xx status per incoming request" (it's probably
+higher than 0, and probably vastly lower than 1, maybe 1 in every
+1000?). KTune your alerting to this.
 
 If you're monitoring things like disk and what have you, you could
 then set oethr thresholds up, for doing things like "file a ticket to
