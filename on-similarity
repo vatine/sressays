@@ -1,0 +1,18 @@
+When dealing with configuration, it is often the case that things are
+similar. It is of utmost importance, when you see two things that are
+identical, to find out if they are accidentally identical, or
+intentionally identical.
+
+If they are intentionally identical, it is good to capture this
+similarity in an "is-a" type of container (a class, a template, ...),
+so the intentional indenticality can them be expressed as a has-a /
+is-a / inherits type of relationship.
+
+If they are merely accidentally identical (that is, they happen to
+look alike, rather than actually needing to do so) it is of imperative
+importance to NOT capture this similarity in a joined piece of
+configuation, but instead list the identical peices separately.
+
+If you do not follow this rule, your intentionally-identical things
+will drift and your accidentally-identical things will have surprise
+changes when the accidental similarity is no longer similar.
