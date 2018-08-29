@@ -1,0 +1,102 @@
+In a conversation earlier today, I was reminded of an "on-line"
+metrics anomaly detection algorithm I cooked up a bunch of years ago,
+and that it might be useful to have it written down somewhere, for
+future consumption. So, in first prose, then glorious pseudo-code,
+here's what it did.
+
+Generate three time series, one is "recent history" (let's say the
+last hour), one is "about this time of day, the last week" (let's say
+in 5 minute chunks), and one is "this time of day, this day of week,
+for the last few months" (let's say 8 weeks).
+
+For each one of those time series, we generate two new time serieses,
+each being "the original time series with the N points furthest over/under
+the least-squares approximation for the time series dropped". We then
+generate a new least-squared regression for each of these six time
+series, find the lowest and highest point at "now" and weigh them.
+From pretty much nowhere (except, the numbers look good), we pick the
+weights as 0.6, 0.3, and 0.1 (from memory, and it's fallible, and it's
+at least 6 years ago, but they are in the right ball-park), so we
+multiply the recent, medium-term and long-term lowest (and highest)
+and add them up. This now gives us a lower and an upper boundary of
+where we expect a "normal" value should fall. And we can thus alert on
+a value being outside of that.
+
+Let us assume we have a monitoring system, from which we can fetch a
+specific time series (let's use a string to signify the name, and two
+integers to specify "start time" and "interval length"). Let us
+further assume that we have a numerical library that can do a few
+things with data points (like, say, compute a least-squares
+approximation). And let us futhrer assume (because notational
+convenience) that the least-squares estimate is a closure that can
+take a time (or extract time from a datapoint) and return the value
+that the estimation predicts for that time.
+
+Then, it looks like this:
+
+```
+// Drop the N "highest over the least square approximation" data points  
+function FilterHighest(timeseries, n) -> timeseries
+    intermediate := SortAnnotatedTimeSerieByDeltas(timeseries)
+    return intermediate[:-n]
+
+// Drop the N "lowest underthe least square approximation" data points  
+function FilterLowest(timeseries, n) -> timeseries
+    intermediate := SortAnnotatedTimeSerieByDeltas(timeseries)
+    return intermediate[n:]
+
+// Return a time series decorated with the difference between each
+// data point and what the least-square approximation says
+function DeltaAnnotate(timeseries, approximator) -> timeseries
+    annotate := function (datapoint) -> datapoint
+        AddDelta(datapoint,
+	        value(datapoint) - approximator(time(datapoint)))
+    return map(annotate, timeseries)
+
+function ComputeLimits(metric, now) -> (lower, upper)
+    // data for the last hour
+    recentTimeSeries := fetchTimeSeries(metric, now - 1h, 1h)
+    recentApproximator := LeastSquares(recentTimeSeries)
+	recentDecorated := DeltaAnnotate(recentTimeSeries, recentApproximator)
+
+    // data for "about now" over the last 7 days
+    mediumTimeSeries := empty
+    for days in range(1..7):
+        tmp := fetchTimeSeries(metric, now - days d, 5m)
+        mediumTimeSeries =merge(mediumTimeSeries, tmp)
+    mediumApproximator := LeastSquares(mediumTimeSeries)
+    mediumDecorated := DeltaAnnotate(mediumTimeSeries, mediumApproximator)
+
+    // data for "about now" over the last 7 days
+    longTimeSeries := empty
+    for weeks in range(1..8):
+        tmp := fetchTimeSeries(metric, now - (7 * weeks) d, 5m)
+        longTimeSeries =merge(longTimeSeries, tmp)
+    longApproximator := LeastSquares(longTimeSeries)
+    longDecorated := DeltaAnnotate(longTimeSeries, longApproximator)
+
+    recentOne := LeastSquares(FilterLowest(recentDecorated, N))
+    recentTwo := LeastSquares(FilterHigest(recentDecorated, N))
+	recentEstimateOne := recentOne(now)
+	recentEstimateTwo := recentTwo(now)
+	recentLow := min(recentOne, recentTwo) 
+	recentHigh :=max(recentOne, recentTwo) 
+
+    mediumOne := LeastSquares(FilterLowest(mediumDecorated, N))
+    mediumTwo := LeastSquares(FilterHigest(mediumDecorated, N))
+	mediumEstimateOne := mediumOne(now)
+	mediumEstimateTwo := mediumTwo(now)
+	mediumLow := min(mediumOne, mediumTwo) 
+	mediumHigh :=max(mediumOne, mediumTwo) 
+
+    longOne := LeastSquares(FilterLowest(longDecorated, N))
+    longTwo := LeastSquares(FilterHigest(longDecorated, N))
+	longEstimateOne := longOne(now)
+	longEstimateTwo := longTwo(now)
+	longLow := min(longOne, longTwo) 
+	longHigh :=max(longOne, longTwo) 
+
+    return (0.6 * recentLow) + (0.3 * mediumLow) + (0.1 * longLow),
+               (0.6 * recentHigh) + (0.3 * mediumHigh) + (0.1 * longHigh)
+```
+			   
