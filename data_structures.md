@@ -24,11 +24,9 @@ Retrieve Nth:
 |            | head | internal | tail |
 |-----|---|------|----|
 |      add|O(1) | O(n)     | O(n), O(1)  |
-|-----|---|------|----|
 |change| O(1)|O(n), O(1)|O(n), O(1) |
-|-----|---|------|----|
 |remove|O(1) | O(n)     | O(n)  |
-|-----|---|------|----|
+
 Retrieve Nth: O(n) 
 
 A single-linked list is your typical "keeps one element of data, and a reference to the rest of the list". One subtle refinement is a list header that also keeps a reference to the last element of the list.
@@ -44,11 +42,9 @@ Single-linked lists are only ordered in so far as "if you iterate through the li
 |            | head | internal | tail |
 |-----|---|------|----|
 |      add|O(1) | O(n), O(1) | O(n), O(1)  |
-|-----|---|------|----|
 |change| O(1)|O(n), O(1)|O(n), O(1) |
-|-----|---|------|----|
 |remove|O(1) | O(n), O(1) | O(n), O(1)  |
-|-----|---|------|----|
+
 Retrieve Nth: O(n) 
 
 A double-linked list is similar to a single-linked list, but keeps a reference both to the next, as well as the previous, element. This means that adding an element afer (or before) or removing an element taht you already have a reference to is inherently an O(1) operation.
@@ -62,11 +58,9 @@ Double-linked lists are only ordered in so far as "if you iterate through the li
 |            | head | internal | tail | 
 |-----|---|------|----|
 |      add|O(n) |O(n)       | AO(1)  |
-|-----|---|------|----|
 |change| O(1)| O(1)      | O(1)  |
-|-----|---|------|----|
 |remove|O(n) |O(n)       | O(1)  |
-|-----|---|------|----|
+
 Retrieve Nth: O(1)
 
 A vector is a linear segment of memory, allowing O(1) random access to its elements, but in creasing the size MAY incur a copy of all existing elements. If you double the potential size of the vector (and keep a small "vector head" tracking the current capacity), the per-element access time increases by one memory reference, but with careful attention to how you grow the vector (approxiately: "double the capacity every time you need to expand"), the amortised cost of adding one element is O(1), even if you will get ocasionally get O(n) behaviour.
@@ -78,11 +72,9 @@ Vectors are only ordered in so far as "if you iterate over the vector, you will 
 |            | head | internal | tail |
 |-----|---|------|----|
 |      add|O(n) | O(n)     | O(n), AO(1)|
-|-----|---|------|----|
 |change| O(1) | O(1)     | O(1)  |
-|-----|---|------|----|
 |remove| O(n)| O(n)      | O(1)  |
-|-----|---|------|----|
+
 Retrieve Nth: O(1)
 
 A "simple" string is not relying on any encoding (so ASCII/ISO-8859-x), and carefully has one character per cell. It is basically a vector of characters and has the same access properties as a vector.
@@ -98,11 +90,9 @@ Strings have the same ordering guarantees as vectors.
 |            | head | internal | tail |
 |-----|---|------|----|
 |      add|O(n) | O(n)     | O(n), AO(1)|
-|-----|---|------|----|
 |change| O(n) | O(n)     | O(n), AO(1)|
-|-----|---|------|----|
 |remove| O(n)| O(n)      | O(1)  |
-|-----|---|------|----|
+
 Retrieve Nth: O(n)
 
 A "complex" string is a string that has a variable-length encoding, like UTF-8. Exact time complexity of removal of the last character depends on careful implementation. If you can encode where the cahracter starts (or the encoding is sufficiently well-behaved), removal of the last character can be done in constant time (longest possible UTF-8 encoding is, what, 5 bytes?), but changing the last character may require extending the vector in which the complex string has been stored.
