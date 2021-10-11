@@ -1,7 +1,7 @@
 # When do you "know" a language?
 
 People I know who work with computers often end up having to write
-code, in one or more languauges. To do that, you need to have some
+code, in one or more languages. To do that, you need to have some
 level of knowledge of the language, but there's also a mile-wide
 difference between "being comfortable making small changes in existing
 code" and "writing code from scratch".
@@ -25,7 +25,7 @@ I can say this, because I have never written a single line of them,
 and I don't know that I could, without at least some level of
 coaching.
 
-I am compfortable answering "do you know X" for any of these with
+I am comfortable answering "do you know X" for any of these with
 "no".
 
 ## Languages I might know
@@ -34,8 +34,8 @@ I am compfortable answering "do you know X" for any of these with
 I maybe know Prolog. I have not written any prolog for about 30 years,
 and what I wrote was in "datavetenskap" class in the Swedish gymnasium
 (using, if memory serves me right, Turbo Prolog). But, back then I
-knew it well enough that not only did I solve teh exercises we were
-supposed to solve, but also implemented a simlistic library for
+knew it well enough that not only did I solve the exercises we were
+supposed to solve, but also implemented a simplistic library for
 derivation of polynomials. I also started looking at simplification of
 the results, but, well, that didn't work.
 
@@ -47,12 +47,12 @@ saddened every time I remember that a Java object is not its own green
 thread that you can send messages to. One, if not the only, reasons
 that I never picked Java up when it was new and shiny. I have mostly
 managed to crib from existing code. None of the fetaures have been
-very complicated. I am comfortable to say that I probbaly don't know
+very complicated. I am comfortable to say that I probably don't know
 Java, but maybe I do.
 
 ### C++
 I may know C++. I have written some C++, from scratch, at a previous
-work-place. It re-implemeted two hard-coded decision makers for
+work-place. It reimplemented two hard-coded decision makers for
 "should I participate in leader election" as a generalised framework,
 where deciders were now any class that fulfilled an interface, and you
 could register them, either when you created the "should we
@@ -61,17 +61,17 @@ passed peer review, and actually netted me "C++ Readability"
 (basically, it allowed me the privilege to say "this C++ looks
 OK"). But, I never got to the point where writing C++ felt "fluid". I
 needed not only library references at hand, but actual language
-references, for any of teh code to actually become valid. To some
+references, for any of the code to actually become valid. To some
 extent, I could crib off of existing code. I am comfortable saying
 that maybe I know it, but I probably don't.
 
 ### C
 I may know C. I know that I used to know C, but I have not used it in
 anger for a decade or so (despite writing some benchmarking code in C,
-only earlier this year, but those were all somple programs). It's been
+only earlier this year, but those were all simple programs). It's been
 long enough that I do stupid mistakes, like thinking that functions
-need eithehr "func" or "def" to declare them, and sticking types in
-the wrong place. I am comfotrable saying that I probably know C, but
+need either "func" or "def" to declare them, and sticking types in
+the wrong place. I am comfortable saying that I probably know C, but
 maybe I don't.
 
 ## Languages I probably know
@@ -90,8 +90,8 @@ library I seldom use.
 I have written patches for FOSS Go projects, some of which have even
 been accepted and merged.
 
-All in all, I am comfortabke with the language. I woudl say that I
-know it, but I am not an expert. There are still the occasionaly
+All in all, I am comfortable with the language. I would say that I
+know it, but I am not an expert. There are still the occasionally
 corner that surprise me.
 
 ### Python
@@ -103,17 +103,17 @@ Go. Somewhere in the last N years, I have gone from writing
 On the whole, I am happy writing Python code from scratch. There are
 definitely corners of the language I have not explored, so I would not
 say I have any mastery of the language, but on the whole I am
-compfortable with saying that I know it.
+comfortable with saying that I know it.
 
 ### Shell
 
-I have been writng shell scripts since, um, 1988 or so. I have
+I have been writing shell scripts since, um, 1988 or so. I have
 probably written less shell, as time has gone on. Mostly because other
 languages have started picking up the slack.
 
 I have reached the point where I try to write as little shell as
-possible. It is, on the whole, not an excellent programing
-languauge. Its strength lies more in being an excellent glue between
+possible. It is, on the whole, not an excellent programming
+language. Its strength lies more in being an excellent glue between
 programs written in other languages.
 
 I know enough shell to know what bits I should stay away from in
@@ -128,9 +128,9 @@ becoming) a master of it.
 A language I use a lot less than I used to. Which, on the whole, is a
 bit of a shame. I like the language. When I use it, I occasionally
 have to go check the HyperSpec for some specifics around one of the
-978 standard library symbols, but I can usually find that prety quick.
+978 standard library symbols, but I can usually find that pretty quick.
 
-On the whole, I woudl say that I know Common Lisp, but I may entertain
+On the whole, I would say that I know Common Lisp, but I may entertain
 the notion taht it is starting to slightly slip out of my grasp.
 
 ## In summary
@@ -145,6 +145,6 @@ Note that there are a bunch of languages that I have not mentioned
 above, that probably would end up in the "might know" category (like,
 say, APL, or Pascal, neither of which I have used in 20+ years).
 
-What (programming) languagues do you know? What are your decision
-criteria for the "defintely do not know", "might know", "probably
+What (programming) languages do you know? What are your decision
+criteria for the "definitely do not know", "might know", "probably
 know" categories?
