@@ -51,3 +51,7 @@ On the surface, Helm's ability to reference other helm charts looks like a nice 
 The "values.yaml" file in the chart's main directory contains basically default values for all manifests in the chart. For good or bad, this does not have a fixed "shape" (good, in that you can tune the shape to fit the chart you're making, bad in that it basically forms the chart's API contract). This means that no matter what you intend, you still need to go and check what the other chart is doing in terms of settings.
 
 If you follow the general recommended style, you can easily end up in a position where teh chart you're writing needs an API surface that is unsuited to what you want it to be.
+
+## So, should I avoid Helm?
+
+On the whole, Helm is better than nothing. But, if you don't need the flexibility of pushing almost the same templates, you may actually be better off having non-templated manifests stored in version control and use something like `cat *.yaml | kubectl apply -f -` to apply them. This does mean that you cannot lean on helm charts created by other people. But, on the other hand, you can read their charts and get inspiration for how your own manifests should look.
