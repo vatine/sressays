@@ -30,6 +30,8 @@ With helm templates being plain text, this turns out to be hard to accomplish in
 
 Another possible issue is that YAML has semantically significant indentation and it is somewhat easy causing the Go template engine to insert (or fail to insert) indentation, causing valid results with inintended semantic value(s).
 
+Furthermore, it is possible to accidentally introduce variable substitutions tht have line breaks, causing utter mayhem in the YAML structure.
+
 ### Structural
 
 In contrast, a structural templating language has knowledge of the domain in which it is doing template expansion. For Kubernetes, this would essentially mean that it is aware of "ContainerSpec", "PodSpec" and similar, and an awareness of their inherent structure, meaning that you can then pull information from other parts of the template to help with the expansion.
