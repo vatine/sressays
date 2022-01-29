@@ -9,15 +9,20 @@ log onto the halyard host").
 
 However, having multiple halyards interacting with a single spinnaker
 deployment quickly ends up in a weirdly skewed configuration. And
-there's nothing inherent to halyard(spinnaker from stopping this (even
+there's nothing inherent in halyard/spinnaker from stopping this (even
 the presence of a per-halyard UUID would potentially help here).
+
+Also notable, halyard does not (at least by default) consult the
+remote spinnaker instance before deciding what its configuration
+is. This means that simply following the installation guidelines for
+getting the "hal" CLI tool installed could potentially cause havoc.
 
 ## Not driven by declarative manifests
 
 Halyard is configured in an incredibly stateful way. To the point that
 it even has a "diff the state that is local to the state that is
 presumed to be remote" (note, the remote state actually does not seem
-to check the remote configuration, but insteasd checks if any state
+to check the remote configuration, but instead checks if any state
 mutation commands have been given).
 
 ## UI operations may reflect stale configuration
@@ -33,7 +38,7 @@ credentials it should use).
 With the existence of a state-keeping "halyard" daemon, and a separate
 "hal" CLI command for interacting with the daemon and mutating
 configuration state, one would assume that all file contents necessary
-for affecting state changes (saya key file when adding a CI account)
+for affecting state changes (say a key file when adding a CI account)
 would be passed as data.
 
 From observation, what actually seems to be passed is a file
