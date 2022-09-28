@@ -5,7 +5,7 @@ Or "correct is better than fast".
 
 ## Background
 
-Once upon a time, there was a company that ran multiple Kubernetes clusters in-house, on top of CoreOS and ignition.
+Once upon a time, there was a company that ran multiple Kubernetes clusters in-house, on top of CoreOS and Ignition.
 
 To alleviate possible "you can make things persist on disk" concerns, the machines would always boot "from scratch", using Ignition to always come up in a deterministic state.
 
@@ -57,4 +57,4 @@ On a hunch, the Jenkins pipeline was flipped back from parallel to serial and ac
 
 Turns out that "external plugin gets OOM-killed" (which shoulf typically result in a non-zero exit code) is (or at least was) interpreted as "there is no data and everything is fine", instead of "there may or may not be data, something went wrong". So, if the OOM-killer managed to kill the "check if there is a certificate" process, as a node was being terraformed, terraform would generate a new certificate. Thankfully, this did not overwrite any of the persisted certificates.
 
-So, in the end, given sufficent parallelism, terraform was not quite as idempotent as you may have wanted.
+So, in the end, given sufficent parallelism, terraform was not quite as idempotent as you may have wanted. And that was a post-mortem that should not have needed writing.
