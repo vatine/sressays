@@ -11,25 +11,25 @@ you need.
 
 ## The case against micro-services
 
-Going for a MSA for your system comes with a cost. A monolith has
-inter-component calls going at "the speed of RAM", whereas a call
-between two microservices are "at the speed of the network". This may
-still be fast, but it is by necessity longer than that of just a call
-between functions in the same binary.
+Going for a MSA for your system comes with a cost.
 
-MSA is more complicated to write and maintain than a monolith. It is
-also (probably) more complicated to operate.
+A monolith has inter-component calls going at "the speed of RAM",
+whereas a call between two microservices are "at the speed of the
+network". This may still be fast, but it is by necessity longer than
+that of just a call between functions in the same binary.
+
+It is harder to write the full system when using MSA than it is to do it as a monlith. Partly because you smiply have more build targets, partly because some of your tests can end up needing more than a single running thing (or, you end up with extensive mocking).
 
 ## The case for using micro-services
 
-Micro-services allow for scaling different components differently. This means that a component whose resource consumptions are linear in the incoming request load can be scaled up slower than a component that is super-linear.
+Micro-services allow for scaling different parts of your service differently. This means that a component whose resource consumptions are linear in the incoming request load can be scaled up slower than a component that is (say) O(n log n) in resoucre requirements. Or, indeed, one that is inherently O(n ** 2) (which, hopefully, does not partake in all possible API calls).
 
-It makes it possible to replace just a single component with a new version.
+It makes it possible to replace just a single component ("microservice" with a new version.
 
 If the "world-facing API surface" (from here on forwards, "the
 front-end" or "FE") is made in-house, the microservice architecture
 can be re-worked without any client-side changes. Depending on how
-API(s) are exposed in a third-party FE, this may or may not work.
+API(s) are exposed in a third-party FE, this may or may not work, we will touch on that in the next section.
 
 ## The case against third-party API managers
 
@@ -37,4 +37,10 @@ A common theme for third-party API managers is "let us have one REST path prefix
 
 However, exposing your internal architecture makes it somewhere between difficult and impossible to change the internal architecture, to meet new demands, changes in usage and/or hamper optimisation possibilities.
 
+Thus, any third-party API manager that makes it easy to expose your internal architecture and makes it hard(er) not to is going to introduce friction in your microservice journey.
+
 ## Conclusions
+
+There are cases where "go microservice" is the right choice. There are cases where "go monolith" is the right choice.
+
+Microservices coe with advantages. But, they also come with drawbacks. Don't pick a microservice architecture because it is "the new hot thing", pick it because its advantages align with your needs and its drawbacks are things you can cope with.
