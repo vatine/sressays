@@ -33,7 +33,7 @@ API(s) are exposed in a third-party FE, this may or may not work, we will touch 
 
 ## The case against third-party API managers
 
-A common theme for third-party API managers is "let us have one REST path prefix be dedicated to a single set of backends". This is understandable, it seems obvious that the "service structure" should be exposed in the "external world" API surface. It also makes it somewhere between easy and trivial to forward the requests.
+A common theme for third-party API managers is "let us have one REST path prefix be dedicated to a single set of backends". This is understandable, it seems obvious that the "service structure" should be exposed in the "external world" API surface. It also makes it somewhere between easy and trivial to forward the requests, as you can simply forward a group of API endpoints directly to a service.
 
 However, exposing your internal architecture makes it somewhere between difficult and impossible to change the internal architecture, to meet new demands, changes in usage and/or hamper optimisation possibilities.
 
@@ -44,3 +44,5 @@ Thus, any third-party API manager that makes it easy to expose your internal arc
 There are cases where "go microservice" is the right choice. There are cases where "go monolith" is the right choice.
 
 Microservices coe with advantages. But, they also come with drawbacks. Don't pick a microservice architecture because it is "the new hot thing", pick it because its advantages align with your needs and its drawbacks are things you can cope with.
+
+Be very careful when considering if you want to use a third-party API manager.
