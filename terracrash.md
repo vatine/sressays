@@ -15,21 +15,21 @@ Not to worry, there are Terraform plug-ins for key management, so this should no
 
 ## This thing is kind of slow...
 
-So, each cluster was defined in a terraform file of its own, leaning heavily on a set of "library" modules, defining the shape of an abstract cluster. All of these were kept in version control.
+So, each cluster was defined in a Terraform file of its own, leaning heavily on a set of "library" modules, defining the shape of an abstract cluster. All of these were kept in version control.
 
-But, it is not at all ideal to keep the secrets and state files in version control, so what happened was that we built a set of bastion hosts where we could run terraform, then locked these bastion hosts down tight.
+But, it is not at all ideal to keep the secrets and state files in version control, so what happened was that we built a set of bastion hosts where we could run Terraform, then locked these bastion hosts down tight.
 
-And to make sure that terraform would run, when needed, there was a Janekins pipeline that simply checked out the repository at the most recent, then ran terraform against each cluster defined in there. Because terraforming an unchanged file is idempotent.
+And to make sure that Terraform would run, when needed, there was a Jenkins pipeline that simply checked out the repository at the most recent, then ran Terraform against each cluster defined in there. Because terraforming an unchanged file is idempotent (or, at least, it is idempotent in theory).
 
-It's also not at all the fastest thing in the world. Not a problem when you have one cluster, but as time grew, so did the number of clusters. And once we were getting to the "more than 5" stage, people went "well, this is kind of slow, and terraform is safe, so let's just make this run in parallel".
+It's also not at all the fastest thing in the world. Not a problem when you have one cluster, but as time grew, so did the number of clusters. And once we were getting to the "more than 5" stage, people went "well, this is kind of slow, and Terraform is safe, so let's just make this run in parallel".
 
-Which happened. And all was fine.
+Which happened. And all was fine. For a while.
 
-## Why is that cluster shrinking?"
+## "Curious, why is that cluster shrinking?"
 
-One downside, as it were, is that terraforming the clusters (which, of course, ran on raw hardware, not virtualised) is that any terraforming effect requires a reboot to pick up. Which, for adding a cluster, or adding a node to a cluster, was not a problem.
+One downside, as it were, is that terraforming the clusters (which, of course, ran on raw hardware, not virtualised) is that any terraforming effect required a reboot to pick up. Which, for adding a cluster, or adding a node to a cluster, was not a problem, as we'd expect a change to one (pr more) nodes and make sure they rebooted on schedule.
 
-But, the downside of that is that there could be multiple terrraformings without any visible effect.
+But, the downside of that is that there could be multiple Terraform runs without any visible effect, since machines simply were not rebooted to pick up the new Ignition configuration.
 
 And, one day, as a worker node rebooted, it did not come back. Head-scratching ensued. This was not at all expected. Some digging ensued.
 
@@ -41,11 +41,11 @@ Well, that was clearly unexpected...
 
 At this point, we're cleary in some sort of "oh shit" incident territory. An unknown number of nodes in potentially multiple clusters may be un-rebootable. Well, unable to be rebooted and rejoin the cluster as intended.
 
-So, some digging in the ignition files happened. And it turns out that roughly half of the machines in three (IIRC, it was more than "one" and less than "all") clusters had certificates that woudl not allow them to rejoin.
+So, some digging into the ignition files happened. And it turns out that roughly half of the machines in three (IIRC, it was more than "one" and less than "all") clusters had certificates that would not allow them to rejoin.
 
-With no obvious reason as to why, it was time to dig deeper. And the first obvious place was the terraform logs. Which, sadly, did not really make anything clearer.
+With no obvious reason as to why, it was time to dig even deeper. And the first obvious place was the terraform logs. Which, sadly, did not really make anything clearer, as they basically jsut revealed "yep, this was a successful run".
 
-Then, it was time to look at the system logs. And that showed something interesting. Quite a lot of OOM-killer messages, with timing that seemed to suspuciously co-incide with Jenkins runs.
+Then, it was time to look at the system logs. And that showed something interesting. Quite a lot of OOM-killer messages, with timing that seemed to suspiciously co-incide with Jenkins runs.
 
 Since the "identify incorrectly terraformed nodes" was sufficently automated (a shell script outside of version control, good enough for this purpose), the Jenkins pipeline was triggered, in the hope that it would either fix the certificate issue, or at least give some further clarity.
 
@@ -55,6 +55,6 @@ After the run, the nodes were checked again. And, would you believe it, there we
 
 On a hunch, the Jenkins pipeline was flipped back from parallel to serial and activated. After that, the clusters were checked again, and all nodes were as expected. And the OOM-killer logs were no longer in evidence.
 
-Turns out that "external plugin gets OOM-killed" (which shoulf typically result in a non-zero exit code) is (or at least was) interpreted as "there is no data and everything is fine", instead of "there may or may not be data, something went wrong". So, if the OOM-killer managed to kill the "check if there is a certificate" process, as a node was being terraformed, terraform would generate a new certificate. Thankfully, this did not overwrite any of the persisted certificates.
+Turns out that "external plugin gets OOM-killed" (which should typically result in a non-zero exit code) is (or at least was) interpreted by Terraform as "there is no data and everything is fine", instead of "there may or may not be data, something went wrong". So, if the OOM-killer managed to kill the "check if there is a certificate" process, as a node was being terraformed, terraform would generate a new certificate. Thankfully, this did not overwrite any of the persisted certificates.
 
-So, in the end, given sufficent parallelism, terraform was not quite as idempotent as you may have wanted. And that was a post-mortem that should not have needed writing.
+So, in the end, given sufficent parallelism, Terraform was not quite as idempotent as you may have wanted. And that was a post-mortem that should not have needed writing.
