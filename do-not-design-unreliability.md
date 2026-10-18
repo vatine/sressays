@@ -1,3 +1,5 @@
+# On designing reliable systems
+
 Some people say "you should always design systems that are reliable
 ". Others look at that statement and say "no, you don't have to care
 about reliability when you're a young startup, it just slows you down
@@ -5,6 +7,8 @@ and costs way to much".
 
 Then I look at these and go "I definitely fall in the first camp, but
 the statement from the second camp makes no sense."
+
+## A reliable mindset
 
 I think this is because if you're in the "please make N+m possible" (N
 being the "number of computers (or data centres) you need to serve
@@ -26,12 +30,16 @@ deploy unless you can deploy in at least two, ideally five AWS
 availablity zones and aim for at least five, maybe six or seven nines
 of uptime".
 
+## It is more about basic design, than about redundant deployment
+
 But I do mean "please look at all bits of your design, figure out what
 your 'cannot be replicated' bits are and at least consider how you can
 get around the 'cannot be replicated'". On the basis that anything
 that cannot be replicated is likely to become both a reliability and a
 scalability problem, down the line. And sometimes, the answer isn't
 "replicate", it's "shard".
+
+## Micro-sharding saves the day?
 
 But if you ever end up deciding to shard your data storage, consider
 using the "micro-sharding" pattern, rather than go the classic "meh,

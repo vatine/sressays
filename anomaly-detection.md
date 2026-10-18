@@ -1,8 +1,14 @@
+# On anomaly detection
+
+## Where it started
+
 In a conversation earlier today, I was reminded of an "on-line"
 metrics anomaly detection algorithm I cooked up a bunch of years ago,
 and that it might be useful to have it written down somewhere, for
 future consumption. So, in first prose, then glorious pseudo-code,
 here's what it did.
+
+## Some stuff, explained
 
 Generate three time series, one is "recent history" (let's say the
 last hour), one is "about this time of day, the last week" (let's say
@@ -99,4 +105,3 @@ function ComputeLimits(metric, now) -> (lower, upper)
     return (0.6 * recentLow) + (0.3 * mediumLow) + (0.1 * longLow),
                (0.6 * recentHigh) + (0.3 * mediumHigh) + (0.1 * longHigh)
 ```
-			   
