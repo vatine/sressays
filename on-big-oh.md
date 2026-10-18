@@ -16,7 +16,7 @@ We can now see if we can determine if two complexity classes are equivalent.  Th
 
 They're clearly equivalent if for any function that is in O(f), it is also in O(g) and vice versa. So, O(f) and O(g) ar ethe same, if O(f) is a subset of O(g) and O(g) is a subset of O(f).
 
-# But what about constant complexity classes?
+## But what about constant complexity classes?
 
 Let us look at a few constant complexity classes. Let's pick O(0), O(1) and O(2).
 

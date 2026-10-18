@@ -1,3 +1,5 @@
+# Monitoring basics
+
 Monitoring is easy. Good monitoring is surprisingly hard. Most people
 looking at service and system monitoring go "ah, it is a thing,
 therefore I shall monitor it and set alerts based on it". This is, I
@@ -25,10 +27,10 @@ should carefully consider when those values are "OK" and "bad". What's
 a suitable 99th percentile latency for "serve the home page"? What's
 an acceptable rate of "5xx status per incoming request" (it's probably
 higher than 0, and probably vastly lower than 1, maybe 1 in every
-1000?). KTune your alerting to this.
+1000?). Tune your alerting to this.
 
 If you're monitoring things like disk and what have you, you could
-then set oethr thresholds up, for doing things like "file a ticket to
-expand disk, once tehres only 7 days left until the disk is full" and
+then set other thresholds up, for doing things like "file a ticket to
+expand disk, once theres only 7 days left until the disk is full" and
 maybe "fire off an automatic clean-up job, before filing the ticket,
 then re-assess the extrapolation of disk filling up".

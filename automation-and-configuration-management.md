@@ -1,3 +1,7 @@
+# Automation and Configuration Management
+
+## Setting the scene
+
 Let us pontificate on the dual nature of "automation" and
 "configuration management", something that is frequently (and to some
 extent painfully so) conflated. I have through many years of poking at
@@ -7,6 +11,8 @@ sexy acronym). It's basically very loosely mapped onto the OODA loop,
 with some of the 'orient' sliding into "decide" and the rest into
 "sense" (and all of 'observe' being "sense"). That 'act' and "actuate"
 are isomorphic should be self-evident.
+
+## Automation vs Configuration management
 
 So, an automate loop is "check how things are, make a plan for how to
 make them be as they should, execute that plan".
@@ -18,14 +24,18 @@ framework around, you know, managing said configuration. Environment
 definitions belong here. Version control belongs here. And code
 review. Because configuration is "just code in a different language".
 
+## Brief aside
+
 A brief aside to discuss things I've seen in "configuration management
 and automation". I've worked a fair bit with Chef and Puppet, and a
 small amount with Ansible. I've also used a slew of "not well known"
 tools internal to one company or another, but I shall try not to
 digress into a discussion about these.
 
+## Tieing Configuration and Automation together
+
 And, in a super-ideal world, your automation leverages your
-automation. And by that, I mean that it can not only go "this system
+configuration. And by that, I mean that it can not only go "this system
 is not as it should be" and make it so, but go "this system is not as
 it should be, but it is the way it was three check-ins ago, so it is
 still fully managed and I can bring it from there to here safely" or
@@ -41,6 +51,8 @@ aware of The Blessed Version Control System which is I gather pretty
 much anathema. But buys you So Much in terms of continuous sensing and
 actuation that it would probably be worth doing.
 
+## What kind of tool are you using?
+
 So, where was I? Ah, yes, with these definitions of "automation
 system" and "configuration management", it's clear that Puppet and
 Chef are both config management and automation tools. It's perhaps
@@ -48,6 +60,8 @@ less clear (at least to me) that Ansible is configuration management
 at all, since it pretty much looks like "all automation" from the
 examples that I have seen. But, then, I've only seen it deployed in
 very much an automation role.
+
+## How frequently should you actuate your configuration?
 
 Then there's the thorny question of "how frequently should
 configuration automation be actuated" and the answer is unsurprisingly
@@ -60,9 +74,3 @@ cause an outage". If I had to put a number on this, I'd say "somewhere
 between every few hours and a few times per week". This is a large
 span, but since I can only speak generally here, that is what I have
 to say.
-
-And while we're discussing code-review, I have a mini-rant for how (at
-least) a GitLab merge shows you not "the head" but "the head as it was
-when the branch was created" (which makes some sense, perhaps), and
-that is the least safe possible way of showing differences when
-merging system configuration changes.

@@ -1,6 +1,10 @@
+# Aggregating metrics
+
 So, you have a monitoring system. And you have a distributed
 system. Congratulations! Welcome to a world of new fascinating
 problems!
+
+## Some aggregation gotchas...
 
 Where were we? Ah, yes, distributed system. With monitoring. Excellent
 way of messing things up on the most amusing ways. So, you have
@@ -21,6 +25,8 @@ because the request rate is very imbalanced.
 So, if you're taking the mean, you need to aggregate "sum of
 latencies" and "number of requests" from your machines, you can then
 use that to compute an estate-wide mean.
+
+## Percentiles are tricky
 
 Sadly, the same thing holds true with percentiles, which is what we
 should connect. So in a distributed system, having something built in
